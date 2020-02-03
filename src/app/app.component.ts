@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import {BackendService} from './backend.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: [ './app.component.scss' ]
 })
-export class AppComponent {
-  tickets = this.backend.tickets();
-  users = this.backend.users();
+export class AppComponent implements OnInit {
 
-  constructor(private backend: BackendService) {}
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
 }
