@@ -1,0 +1,13 @@
+<h2>Tickets</h2>
+
+<div *ngIf="tickets$ | async as tickets; else loading">
+    <ul>
+        <li *ngFor="let ticket of tickets">
+            Ticket: {{ticket.id}}, {{ticket.description}}
+        </li>
+    </ul>
+</div>
+
+<ng-template #loading>
+    <mat-spinner diameter=25></mat-spinner>
+</ng-template>

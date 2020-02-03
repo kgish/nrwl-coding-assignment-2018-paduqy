@@ -1,25 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomePage } from './home.page';
-import { SharedModule } from '../../shared/shared.module';
-import { BackendService } from '../../services';
+import { HomeComponent } from './home.component';
+import { MatButtonModule } from "@angular/material/button";
 
 const routes: Routes = [
-    { path: '', component: HomePage }
+    { path: '', component: HomeComponent }
 ];
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
         RouterModule.forChild(routes),
-        SharedModule
+        MatButtonModule,
     ],
-    declarations: [ HomePage ],
-    providers: [ BackendService ]
+    declarations: [ HomeComponent ],
+    providers: []
 })
-export class HomePageModule {
+export class HomeModule {
 }
