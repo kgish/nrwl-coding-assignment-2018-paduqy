@@ -1,7 +1,31 @@
 <h2>Ticket detail</h2>
 
 <div *ngIf="ticket$ | async as ticket; else loading">
-<p>Ticket: {{ticket.id}}, {{ticket.description}}</p>
+    <form [formGroup]="form">
+        <mat-form-field>
+            <input matInput formControlName="description" [value]="ticket.description" placeholder="Description">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="users$ | async as users">
+            <mat-label>Assignee</mat-label>
+            <mat-select formControlName="assignee">
+                <mat-option *ngFor="let user of users" [value]="user">
+                    {{user.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="completed" [value]="ticket.completed">Completed</mat-checkbox>
+    </form>
+    <button [disabled]="!updated" mat-raised-button color="primary" (click)="update()">
+        Update
+    </button>
+    <button mat-raised-button color="warn" (click)="delete()">
+        Delete
+    </button>
+    <button mat-button color="primary" [routerLink]="['/tickets']">
+        Cancel
+    </button>
 </div>
 
 <ng-template #loading>

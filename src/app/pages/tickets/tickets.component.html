@@ -3,9 +3,12 @@
 <div *ngIf="tickets$ | async as tickets; else loading">
     <ul>
         <li *ngFor="let ticket of tickets">
-            Ticket: {{ticket.id}}, <a [routerLink]="[ticket.id, 'details']">{{ticket.description}}</a>
+            {{ticket.id}}. <a [routerLink]="[ticket.id, 'details']">{{ticket.description}}</a>
         </li>
     </ul>
+    <button mat-raised-button color="primary" (click)="create()">
+        New ticket
+    </button>
 </div>
 
 <ng-template #loading>

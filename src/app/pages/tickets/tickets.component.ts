@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
 
-import { BackendService, Ticket, User } from "../../services";
+import { BackendService, Ticket } from "../../services";
 
 @Component({
     selector: 'app-tickets',
@@ -11,13 +11,18 @@ import { BackendService, Ticket, User } from "../../services";
 export class TicketsComponent implements OnInit {
 
     tickets$: Observable<Ticket[]>;
-    // users$: Observable<User[]>;
 
-    constructor(private backend: BackendService) {
+    constructor(
+        private backend: BackendService
+    ) {
     }
 
     ngOnInit(): void {
-      this.tickets$ = this.backend.tickets();
-        // this.users$ = this.backend.users();
+        this.tickets$ = this.backend.tickets();
+    }
+
+    create() {
+        // TODO
+        console.log('create')
     }
 }
