@@ -3,7 +3,7 @@
 <div *ngIf="tickets$ | async as tickets; else loading">
     <ul>
         <li *ngFor="let ticket of tickets">
-            Ticket: {{ticket.id}}, {{ticket.description}}
+            Ticket: {{ticket.id}}, <a [routerLink]="[ticket.id, 'details']">{{ticket.description}}</a>
         </li>
     </ul>
 </div>
