@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import 'hammerjs';
 import './polyfills';
 
@@ -8,10 +9,10 @@ import { AppModule } from './app/app.module';
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   // Ensure Angular destroys itself on hot reloads.
-  if (window.ngRef) {
-    window.ngRef.destroy();
+  if (window['ngRef']) {
+    window['ngRef'].destroy();
   }
-  window.ngRef = ref;
+  window['ngRef'] = ref;
 
   // Otherwise, log the boot error
 }).catch(err => console.error(err));
