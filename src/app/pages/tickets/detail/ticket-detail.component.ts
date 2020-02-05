@@ -101,9 +101,11 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     // Private
 
     _initData(data: Data) {
-        this.form.patchValue(data.ticket);
-        this.original = JSON.stringify(data.ticket);
-        this._subscribeChanges();
+        if (data.ticket) {
+            this.form.patchValue(data.ticket);
+            this.original = JSON.stringify(data.ticket);
+            this._subscribeChanges();
+        }
     }
 
     _subscribeChanges() {

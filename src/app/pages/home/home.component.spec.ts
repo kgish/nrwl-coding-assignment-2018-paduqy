@@ -24,4 +24,9 @@ describe('HomeComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should display correct page header', async(() => {
+        const compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('.page-header').textContent).toContain('Welcome');
+    }));
 });
