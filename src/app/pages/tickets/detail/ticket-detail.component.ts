@@ -100,7 +100,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
     // Private
 
-    _initData(data: Data) {
+    private _initData(data: Data) {
         if (data.ticket) {
             this.form.patchValue(data.ticket);
             this.original = JSON.stringify(data.ticket);
@@ -108,7 +108,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    _subscribeChanges() {
+    private _subscribeChanges() {
         this.subscr = this.form.valueChanges.subscribe(value => {
             const updated = JSON.stringify(value);
             this.updated = this.original !== updated;

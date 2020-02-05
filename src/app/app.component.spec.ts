@@ -8,7 +8,7 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents();
     }));
     it('should create the app', async(() => {

@@ -72,7 +72,8 @@ export class BackendService {
     private findUserById = id => this.storedUsers.find(user => user.id === +id);
 
     tickets() {
-        return of(this.storedTickets).pipe(delay(randomDelay()));
+        return throwError(new Error('500 Internal Serfver Error'));
+        // return of(this.storedTickets).pipe(delay(randomDelay()));
     }
 
     ticket(id: number): Observable<Ticket> {

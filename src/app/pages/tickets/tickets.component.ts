@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { BackendService, Ticket } from '../../services';
 
@@ -20,6 +21,15 @@ export class TicketsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.tickets$ = this.backend.tickets();
+        this.tickets$ = this.backend.tickets().pipe(
+            catchError(err => this._handleError('tickets'))
+        );
+    }
+
+    // Private
+
+    private _handleError(fn: string) {
+        console.log(`backend.${fn}() failed`);
+        return of([]);
     }
 }
