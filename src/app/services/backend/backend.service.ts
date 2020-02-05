@@ -72,15 +72,17 @@ export class BackendService {
     private findUserById = id => this.storedUsers.find(user => user.id === +id);
 
     tickets() {
-        return throwError(new Error('500 Internal Serfver Error'));
-        // return of(this.storedTickets).pipe(delay(randomDelay()));
+        // return throwError(new Error('500 Internal Server Error'));
+        return of(this.storedTickets).pipe(delay(randomDelay()));
     }
 
     ticket(id: number): Observable<Ticket> {
+        // return throwError(new Error('500 Internal Server Error'));
         return of(this.findTicketById(id)).pipe(delay(randomDelay()));
     }
 
     users() {
+        // return throwError(new Error('500 Internal Server Error'));
         return of(this.storedUsers).pipe(delay(randomDelay()));
     }
 
@@ -89,6 +91,7 @@ export class BackendService {
     }
 
     newTicket(ticket: Ticket) {
+        // return throwError(new Error('500 Internal Server Error'));
         const newTicket: Ticket = {
             id: ++this.lastId,
             description: ticket.description,
@@ -103,6 +106,7 @@ export class BackendService {
     }
 
     description(ticketId: number, description: string) {
+        // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+ticketId);
         if (foundTicket) {
             return of(foundTicket).pipe(
@@ -115,6 +119,7 @@ export class BackendService {
     }
 
     assign(ticketId: number, userId: number) {
+        // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+ticketId);
         const user = this.findUserById(+userId);
 
@@ -129,6 +134,7 @@ export class BackendService {
     }
 
     complete(ticketId: number, completed: boolean) {
+        // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+ticketId);
         if (foundTicket) {
             return of(foundTicket).pipe(
@@ -140,7 +146,9 @@ export class BackendService {
         return throwError(new Error('ticket not found'));
     }
 
+    // TODO
     update(updated: Ticket) {
+        // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+updated.id);
         const user = this.findUserById(+updated.assigneeId);
 
