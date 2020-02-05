@@ -1,12 +1,13 @@
 <h2>Tickets</h2>
 
 <div *ngIf="tickets$ | async as tickets; else loading">
+    <p>Found {{tickets.length}} ticket{{tickets.length === 1 ? '' : 's'}}.</p>
     <ul>
         <li *ngFor="let ticket of tickets">
             {{ticket.id}}. <a [routerLink]="[ticket.id, 'details']">{{ticket.description}}</a>
         </li>
     </ul>
-    <button mat-raised-button color="primary" (click)="create()">
+    <button mat-raised-button color="primary" [routerLink]="['create']">
         New ticket
     </button>
 </div>

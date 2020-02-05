@@ -1,11 +1,7 @@
-<h2>Ticket detail</h2>
+<h2>Ticket Create</h2>
 
-<div *ngIf="data$ | async as data; else loading">
+<div *ngIf="users$ | async as users; else loading">
     <form [formGroup]="form">
-        <mat-form-field>
-            <input matInput readonly formControlName="id" placeholder="Id">
-        </mat-form-field>
-
         <mat-form-field>
             <input matInput formControlName="description" placeholder="Description">
         </mat-form-field>
@@ -13,7 +9,7 @@
         <mat-form-field>
             <mat-label>Assignee</mat-label>
             <mat-select formControlName="assigneeId">
-                <mat-option *ngFor="let user of data.users" [value]="user.id">
+                <mat-option *ngFor="let user of users" [value]="user.id">
                     {{user.name}}
                 </mat-option>
             </mat-select>
@@ -21,11 +17,8 @@
 
         <mat-checkbox formControlName="completed">Completed</mat-checkbox>
     </form>
-    <button mat-raised-button [disabled]="!updated" color="primary" (click)="update()">
-        Update
-    </button>
-    <button mat-raised-button color="warn" (click)="delete()">
-        Delete
+    <button mat-raised-button [disabled]="!form.valid" color="primary" (click)="create()">
+        Create
     </button>
     <button mat-button color="primary" [routerLink]="['/tickets']">
         Cancel

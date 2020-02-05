@@ -4,12 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../../../material/material.module';
-import { TicketDetailComponent } from './ticket-detail.component';
+import { TicketCreateComponent } from './ticket-create.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: TicketDetailComponent
+        component: TicketCreateComponent
     }
 ];
 
@@ -20,7 +20,7 @@ const routes: Routes = [
         MaterialModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [ TicketDetailComponent ],
+    declarations: [ TicketCreateComponent ],
 })
-export class TicketDetailModule {
+export class TicketCreateModule {
 }

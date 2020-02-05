@@ -2,16 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { BackendService } from "../../services";
-import { MaterialModule } from "../../material/material.module";
+import { MaterialModule } from '../../material/material.module';
 
 import { TicketsComponent } from './tickets.component';
 
 const routes: Routes = [
-    { path: '', component: TicketsComponent },
+    {
+        path: '',
+        component: TicketsComponent
+    },
     {
         path: ':id/details',
         loadChildren: () => import('./detail/ticket-detail.module').then(m => m.TicketDetailModule)
+    },
+    {
+        path: 'create',
+        loadChildren: () => import('./create/ticket-create.module').then(m => m.TicketCreateModule)
     }
 ];
 
@@ -21,8 +27,7 @@ const routes: Routes = [
         MaterialModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [ TicketsComponent ],
-    providers: [ BackendService ]
+    declarations: [ TicketsComponent ]
 })
 export class TicketsModule {
 }

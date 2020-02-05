@@ -1,9 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { BackendService, Ticket, User } from '../../../services';
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+interface Data {
+    ticket: Ticket;
+    users: User[];
+}
 
 @Component({
     selector: 'app-tickets',
@@ -12,14 +18,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class TicketDetailComponent implements OnInit, OnDestroy {
 
-    ticket$: Observable<Ticket>;
-    // users: User[] = [];
-    users$: Observable<User[]>;
-
+    data$: Observable<Data>;
     form: FormGroup;
+
+    original: string;
     updated = false;
 
-    private subscr: Subscription;
+    subscr: Subscription;
 
     constructor(
         private fb: FormBuilder,
@@ -30,44 +35,81 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.form = this.fb.group({
+            id: [ '' ],
             description: [ '', [ Validators.required ] ],
-            assignee: [ '' ],
-            completed: [ false ]
-        });
-
-        this.subscr = this.form.valueChanges.subscribe(() => {
-            this.updated = true;
-            this._unsubscribe();
+            assigneeId: [ '' ],
+            completed: [ '' ]
         });
 
         const id = +this.activeRoute.snapshot.params.id;
-        this.ticket$ = this.backend.ticket(id);
+        const ticket$ = this.backend.ticket(id);
 
-        this.users$ = this.backend.users();
-        // this.backend.users().subscribe(users => this.users = users);
+        const users$ = this.backend.users();
+
+        this.data$ = combineLatest([ ticket$, users$ ]).pipe(
+            map(result => ({ ticket: result[0], users: result[1] })),
+            tap(data => this._initData(data))
+        );
     }
 
     ngOnDestroy(): void {
-        this._unsubscribe();
-    }
-
-    update() {
-        // TODO
-        console.log(this.form.value);
-    }
-
-    delete() {
-        // TODO
-        console.log('delete!');
-        this.router.navigate([ '/tickets' ])
-    }
-
-    // Private
-
-    _unsubscribe() {
         if (this.subscr) {
             this.subscr.unsubscribe();
             this.subscr = null;
         }
+    }
+
+    update() {
+        const updated: Ticket = this.form.value;
+        const original: Ticket = JSON.parse(this.original);
+        const observables: Observable<Ticket>[] = [];
+
+        if (updated.description !== original.description) {
+            observables.push(this.backend.description(updated.id, updated.description));
+        }
+
+        if (updated.completed !== original.completed) {
+            observables.push(this.backend.complete(updated.id, updated.completed));
+        }
+
+        if (updated.assigneeId !== original.assigneeId) {
+            observables.push(this.backend.assign(updated.id, updated.assigneeId));
+        }
+
+        combineLatest(observables).subscribe(() => {
+            console.log(`Updated ticket #${updated.id}`);
+            this.router.navigate([ '/tickets' ]);
+        });
+
+        // TODO
+        // this.backend.update(updated).subscribe(ticket => {
+        //     console.log(`Deleted ticket #${updated.id}`);
+        //     this.router.navigate([ '/tickets' ])
+        // });
+    }
+
+    delete() {
+        const id = this.form.get('id').value;
+        if (window.confirm('Are you sure?')) {
+            this.backend.delete(id).subscribe(ticket => {
+                console.log(`Deleted ticket #${id}`);
+                this.router.navigate([ '/tickets' ]);
+            });
+        }
+    }
+
+    // Private
+
+    _initData(data: Data) {
+        this.form.patchValue(data.ticket);
+        this.original = JSON.stringify(data.ticket);
+        this._subscribeChanges();
+    }
+
+    _subscribeChanges() {
+        this.subscr = this.form.valueChanges.subscribe(value => {
+            const updated = JSON.stringify(value);
+            this.updated = this.original !== updated;
+        });
     }
 }
