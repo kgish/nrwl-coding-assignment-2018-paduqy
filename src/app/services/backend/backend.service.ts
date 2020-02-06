@@ -148,9 +148,10 @@ export class BackendService {
     }
 
     update(updated: Ticket) {
+        console.log(updated.assigneeId);
         // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+updated.id);
-        const user = this.findUserById(+updated.assigneeId);
+        const user = updated.assigneeId === null || !!this.findUserById(+updated.assigneeId);
 
         if (foundTicket && user) {
             return of(foundTicket).pipe(
