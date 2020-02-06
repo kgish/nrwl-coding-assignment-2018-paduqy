@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { MaterialModule } from '../../../material/material.module';
+import { MaterialModule } from '../../../material';
+import { SharedModule } from '../../../shared';
+
 import { TicketCreateComponent } from './ticket-create.component';
 
 describe('TicketCreateComponent', () => {
@@ -12,7 +14,12 @@ describe('TicketCreateComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ TicketCreateComponent ],
-            imports: [ MaterialModule, ReactiveFormsModule, RouterTestingModule ]
+            imports: [
+                MaterialModule,
+                ReactiveFormsModule,
+                RouterTestingModule,
+                SharedModule
+            ]
         })
             .compileComponents();
     }));

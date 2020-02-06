@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialModule } from '../../../material/material.module';
+import { MaterialModule } from '../../../material';
+import { SharedModule } from '../../../shared';
+
 import { TicketCreateComponent } from './ticket-create.component';
 
 const routes: Routes = [
@@ -19,6 +21,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         MaterialModule,
         RouterModule.forChild(routes),
+        SharedModule
     ],
     declarations: [ TicketCreateComponent ],
 })

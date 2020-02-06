@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MaterialModule } from '../../material/material.module';
+import { MaterialModule } from '../../material';
+import { SharedModule } from '../../shared';
 
 import { TicketsComponent } from './tickets.component';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
         CommonModule,
         MaterialModule,
         RouterModule.forChild(routes),
+        SharedModule
     ],
     declarations: [ TicketsComponent ]
 })

@@ -12,6 +12,8 @@ interface Data {
     users: User[];
 }
 
+type Action = 'Updating' | 'Deleting';
+
 @Component({
     selector: 'app-tickets',
     templateUrl: './ticket-detail.component.html',
@@ -26,6 +28,8 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     updated = false;
 
     subscr: Subscription;
+
+    action: Action;
 
     constructor(
         private fb: FormBuilder,
@@ -63,29 +67,37 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     update() {
         const ticket: Ticket = this.form.value as Ticket;
 
-        this.backend.update(ticket).subscribe(t => {
-            // this.snackbar.open(`Updated ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
-            console.log(`Updated ticket: ${JSON.stringify(t)}`);
-            this.router.navigate([ '/tickets' ]);
-        });
+        this.action = 'Updating';
+        this.backend.update(ticket).subscribe(
+            t => {
+                // this.snackbar.open(`Updated ticket #${t.id} "${t.description}"`, 'Ok', { duration: 2000 });
+                console.log(`Updated ticket: ${JSON.stringify(t)}`);
+            },
+            error => console.error(error),
+            () => this._completed()
+        );
     }
 
     delete() {
         const ticket: Ticket = this.form.value as Ticket;
 
         if (window.confirm('Are you sure?')) {
-            this.backend.delete(ticket.id).subscribe(t => {
-                // this.snackbar.open(`Deleted ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
-                console.log(`Deleted ticket: ${JSON.stringify(t)}`);
-                this.router.navigate([ '/tickets' ]);
-            });
+            this.action = 'Deleting';
+            this.backend.delete(ticket.id).subscribe(
+                t => {
+                    // this.snackbar.open(`Deleted ticket #${t.id} "${t.description}"`, 'Ok', { duration: 2000 });
+                    console.log(`Deleted ticket: ${JSON.stringify(t)}`);
+                },
+                error => console.error(error),
+                () => this._completed()
+            );
         }
     }
 
     cancel() {
         const t: Ticket = this.form.value as Ticket;
 
-        // this.snackbar.open(`Cancelled ticket update #${t.id} "${t.description}"`, 'X', { duration: 2000 });
+        // this.snackbar.open(`Cancelled ticket update #${t.id} "${t.description}"`, 'Ok', { duration: 2000 });
         console.log(`Cancelled ticket update: ${JSON.stringify(t)}`);
         this.router.navigate([ '/tickets' ]);
     }
@@ -105,5 +117,10 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
             const updated = JSON.stringify(value);
             this.updated = this.original !== updated;
         });
+    }
+
+    private _completed() {
+        this.action = null;
+        this.router.navigate([ '/tickets' ]);
     }
 }

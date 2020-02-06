@@ -1,30 +1,32 @@
 <h2 class="page-header">Ticket Create</h2>
 
-<div *ngIf="users$ | async as users; else loading">
-    <form [formGroup]="form">
-        <mat-form-field>
-            <input matInput formControlName="description" placeholder="Description">
-        </mat-form-field>
+<app-spinner *ngIf="creating" text="Creating"></app-spinner>
 
-        <mat-form-field>
-            <mat-label>Assignee</mat-label>
-            <mat-select formControlName="assigneeId">
-                <mat-option *ngFor="let user of users" [value]="user.id">
-                    {{user.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+<div *ngIf="!creating">
+    <div *ngIf="users$ | async as users; else loading">
+        <form [formGroup]="form">
+            <mat-form-field>
+                <input matInput formControlName="description" placeholder="Description">
+            </mat-form-field>
 
-        <mat-checkbox formControlName="completed">Completed</mat-checkbox>
-    </form>
-    <button mat-raised-button [disabled]="!form.valid" color="primary" (click)="create()">
-        Create
-    </button>
-    <button mat-button color="primary" [routerLink]="['/tickets']">
-        Cancel
-    </button>
+            <mat-form-field>
+                <mat-label>Assignee</mat-label>
+                <mat-select formControlName="assigneeId">
+                    <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="completed">Completed</mat-checkbox>
+        </form>
+        <button mat-raised-button [disabled]="!form.valid" color="primary" (click)="create()">
+            Create
+        </button>
+        <button mat-button color="primary" [routerLink]="['/tickets']">
+            Cancel
+        </button>
+    </div>
+
+    <ng-template #loading>
+        <app-spinner></app-spinner>
+    </ng-template>
 </div>
-
-<ng-template #loading>
-    <mat-spinner diameter=25></mat-spinner>
-</ng-template>

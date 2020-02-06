@@ -44,7 +44,8 @@ Here is a high level view of the project.
 │   │   └── backend.service.ts
 │   └── shared
 │       ├── footer
-│       └── header
+│       ├── header
+│       └── spinner
 ├── assets
 └── assets
     └── images

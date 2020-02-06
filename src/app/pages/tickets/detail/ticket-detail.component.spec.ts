@@ -7,9 +7,10 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
 import { TicketDetailComponent } from './ticket-detail.component';
-import { BackendService, Ticket, User } from '../../../services/backend';
+import { BackendService, Ticket, User } from '../../../services';
 
-import { MaterialModule } from '../../../material/material.module';
+import { MaterialModule } from '../../../material';
+import { SharedModule } from '../../../shared';
 
 const TICKET_ID = 3;
 
@@ -52,7 +53,8 @@ describe('TicketDetailComponent', () => {
                 MaterialModule,
                 NoopAnimationsModule,
                 ReactiveFormsModule,
-                RouterTestingModule
+                RouterTestingModule,
+                SharedModule
             ],
             providers: [
                 { provide: BackendService, useClass: MockBackendService },

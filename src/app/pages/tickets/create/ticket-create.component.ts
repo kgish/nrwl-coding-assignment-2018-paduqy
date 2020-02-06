@@ -22,6 +22,8 @@ export class TicketCreateComponent implements OnInit {
 
     users$: Observable<User[]>;
 
+    creating = false;
+
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -41,10 +43,21 @@ export class TicketCreateComponent implements OnInit {
 
     create() {
         const ticket: Ticket = this.form.value as Ticket;
-        this.backend.newTicket(ticket).subscribe(t => {
-            // this.snackbar.open(`Created ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
-            console.log(`Created ticket: ${JSON.stringify(t)}`);
-            this.router.navigate([ '/tickets' ]);
-        });
+        this.creating = true;
+        this.backend.newTicket(ticket).subscribe(
+            t => {
+                // this.snackbar.open(`Created ticket #${t.id} "${t.description}"`, 'OK', { duration: 2000 });
+                console.log(`Created ticket: ${JSON.stringify(t)}`);
+            },
+            error => console.error(error),
+            () => this._completed()
+        );
+    }
+
+    // Private
+
+    private _completed() {
+        this.creating = false;
+        this.router.navigate([ '/tickets' ]);
     }
 }

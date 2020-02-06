@@ -4,9 +4,11 @@ import { Injectable } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import { MaterialModule } from '../../material/material.module';
+import { MaterialModule } from '../../material';
+import { SharedModule } from '../../shared';
+import { BackendService, Ticket } from '../../services';
+
 import { TicketsComponent } from './tickets.component';
-import { BackendService, Ticket } from '../../services/backend';
 
 const TICKETS: Ticket[] = [
     { id: 1, description: 'Description #1', assigneeId: 1, completed: false },
@@ -33,7 +35,11 @@ describe('TicketsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ TicketsComponent ],
-            imports: [ MaterialModule, RouterTestingModule ],
+            imports: [
+                MaterialModule,
+                RouterTestingModule,
+                SharedModule
+            ],
             providers: [
                 { provide: BackendService, useClass: MockBackendService }
             ]
