@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { map, tap } from 'rxjs/operators';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BackendService, Ticket, User } from '../../../services';
 
@@ -31,7 +31,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private activeRoute: ActivatedRoute,
         private router: Router,
-        private snackbar: MatSnackBar,
+        // private snackbar: MatSnackBar,
         private backend: BackendService) {
     }
 
@@ -64,7 +64,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
         const ticket: Ticket = this.form.value as Ticket;
 
         this.backend.update(ticket).subscribe(t => {
-            this.snackbar.open(`Updated ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
+            // this.snackbar.open(`Updated ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
             console.log(`Updated ticket: ${JSON.stringify(t)}`);
             this.router.navigate([ '/tickets' ]);
         });
@@ -75,7 +75,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
         if (window.confirm('Are you sure?')) {
             this.backend.delete(ticket.id).subscribe(t => {
-                this.snackbar.open(`Deleted ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
+                // this.snackbar.open(`Deleted ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
                 console.log(`Deleted ticket: ${JSON.stringify(t)}`);
                 this.router.navigate([ '/tickets' ]);
             });
@@ -85,7 +85,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     cancel() {
         const t: Ticket = this.form.value as Ticket;
 
-        this.snackbar.open(`Cancelled ticket update #${t.id} "${t.description}"`, 'X', { duration: 2000 });
+        // this.snackbar.open(`Cancelled ticket update #${t.id} "${t.description}"`, 'X', { duration: 2000 });
         console.log(`Cancelled ticket update: ${JSON.stringify(t)}`);
         this.router.navigate([ '/tickets' ]);
     }

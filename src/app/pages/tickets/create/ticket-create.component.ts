@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BackendService, Ticket, User } from '../../../services';
 
@@ -25,7 +25,7 @@ export class TicketCreateComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private snackbar: MatSnackBar,
+        // private snackbar: MatSnackBar,
         private backend: BackendService) {
     }
 
@@ -42,7 +42,7 @@ export class TicketCreateComponent implements OnInit {
     create() {
         const ticket: Ticket = this.form.value as Ticket;
         this.backend.newTicket(ticket).subscribe(t => {
-            this.snackbar.open(`Created ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
+            // this.snackbar.open(`Created ticket #${t.id} "${t.description}"`, 'X', { duration: 2000 });
             console.log(`Created ticket: ${JSON.stringify(t)}`);
             this.router.navigate([ '/tickets' ]);
         });

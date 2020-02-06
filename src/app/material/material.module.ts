@@ -9,7 +9,7 @@ import {
     MatOptionModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatSnackBarModule,
+    // MatSnackBarModule,
     MatToolbarModule,
 } from '@angular/material';
 
@@ -23,7 +23,7 @@ import {
         MatOptionModule,
         MatProgressSpinnerModule,
         MatSelectModule,
-        MatSnackBarModule,
+        // MatSnackBarModule,
         MatToolbarModule,
     ],
     exports: [
@@ -35,7 +35,7 @@ import {
         MatOptionModule,
         MatProgressSpinnerModule,
         MatSelectModule,
-        MatSnackBarModule,
+        // MatSnackBarModule,
         MatToolbarModule,
     ]
 })
