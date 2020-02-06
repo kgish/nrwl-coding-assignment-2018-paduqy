@@ -43,10 +43,10 @@ Here is a high level view of the project.
 │   ├── services
 │   │   └── backend.service.ts
 │   └── shared
-│       ├── footer
-│       ├── header
-│       └── spinner
-├── assets
+│       └── components
+│           ├── footer
+│           ├── header
+│           └── spinner
 └── assets
     └── images
         ├── favicon.png
