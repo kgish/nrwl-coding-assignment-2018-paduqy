@@ -21,7 +21,7 @@
 
         <mat-checkbox formControlName="completed">Completed</mat-checkbox>
     </form>
-    <button mat-raised-button [disabled]="!updated" color="primary" (click)="update()">
+    <button mat-raised-button [disabled]="!updated || !form.valid" color="primary" (click)="update()">
         Update
     </button>
     <button mat-raised-button color="warn" (click)="delete()">

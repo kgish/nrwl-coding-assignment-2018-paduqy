@@ -63,9 +63,10 @@ export class BackendService {
         { id: 115, name: 'Kelly' }
     ];
 
-    lastId = 1004;
+    lastId: number;
 
     constructor() {
+        this.lastId = this.storedTickets[this.storedTickets.length - 1].id;
     }
 
     private findTicketById = id => this.storedTickets.find(ticket => ticket.id === +id);
@@ -146,7 +147,6 @@ export class BackendService {
         return throwError(new Error('ticket not found'));
     }
 
-    // TODO
     update(updated: Ticket) {
         // return throwError(new Error('500 Internal Server Error'));
         const foundTicket = this.findTicketById(+updated.id);
@@ -155,7 +155,7 @@ export class BackendService {
         if (foundTicket && user) {
             return of(foundTicket).pipe(
                 delay(randomDelay()),
-                tap((ticket: Ticket) => ticket = updated)
+                tap((ticket: Ticket) => this._update(ticket, updated))
             );
         }
 
@@ -167,13 +167,23 @@ export class BackendService {
         if (foundTicket) {
             return of(foundTicket).pipe(
                 delay(randomDelay()),
-                tap((ticket: Ticket) => {
-                    const index = this.storedTickets.findIndex(t => ticket.id === t.id);
-                    this.storedTickets.splice(index, 1);
-                })
+                tap((ticket: Ticket) => this._delete(ticket))
             );
         }
 
         return throwError(new Error('ticket not found'));
+    }
+
+    // Private
+
+    _update(ticket: Ticket, updated: Ticket) {
+        ticket.description = updated.description;
+        ticket.assigneeId = updated.assigneeId;
+        ticket.completed = updated.completed;
+    }
+
+    _delete(ticket: Ticket) {
+        const index = this.storedTickets.findIndex(t => ticket.id === t.id);
+        this.storedTickets.splice(index, 1);
     }
 }

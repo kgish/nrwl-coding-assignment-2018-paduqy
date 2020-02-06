@@ -60,39 +60,20 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
     }
 
     update() {
-        const updated: Ticket = this.form.value;
-        const original: Ticket = JSON.parse(this.original);
-        const observables: Observable<Ticket>[] = [];
+        const ticket: Ticket = this.form.value as Ticket;
 
-        if (updated.description !== original.description) {
-            observables.push(this.backend.description(updated.id, updated.description));
-        }
-
-        if (updated.completed !== original.completed) {
-            observables.push(this.backend.complete(updated.id, updated.completed));
-        }
-
-        if (updated.assigneeId !== original.assigneeId) {
-            observables.push(this.backend.assign(updated.id, updated.assigneeId));
-        }
-
-        combineLatest(observables).subscribe(() => {
-            console.log(`Updated ticket #${updated.id}`);
+        this.backend.update(ticket).subscribe(t => {
+            console.log(`Updated ticket: ${JSON.stringify(t)}`);
             this.router.navigate([ '/tickets' ]);
         });
-
-        // TODO
-        // this.backend.update(updated).subscribe(ticket => {
-        //     console.log(`Deleted ticket #${updated.id}`);
-        //     this.router.navigate([ '/tickets' ])
-        // });
     }
 
     delete() {
-        const id = this.form.get('id').value;
+        const ticket: Ticket = this.form.value as Ticket;
+
         if (window.confirm('Are you sure?')) {
-            this.backend.delete(id).subscribe(ticket => {
-                console.log(`Deleted ticket #${id}`);
+            this.backend.delete(ticket.id).subscribe(t => {
+                console.log(`Deleted ticket: ${JSON.stringify(t)}`);
                 this.router.navigate([ '/tickets' ]);
             });
         }

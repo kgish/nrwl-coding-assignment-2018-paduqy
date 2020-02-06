@@ -30,17 +30,17 @@ export class TicketCreateComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.fb.group({
             description: [ '', [ Validators.required ] ],
-            assigneeId: [ '' ],
-            completed: [ '' ]
+            assigneeId: [ null ],
+            completed: [ false ]
         });
 
         this.users$ = this.backend.users();
     }
 
     create() {
-        const ticket: Ticket = this.form.value;
+        const ticket: Ticket = this.form.value as Ticket;
         this.backend.newTicket(ticket).subscribe(t => {
-            console.log(`Created ticket #${t.id}`);
+            console.log(`Created ticket: ${JSON.stringify(t)}`);
             this.router.navigate([ '/tickets' ]);
         });
     }
