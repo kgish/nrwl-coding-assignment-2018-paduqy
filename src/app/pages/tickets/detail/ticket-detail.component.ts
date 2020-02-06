@@ -43,7 +43,6 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
         const id = +this.activeRoute.snapshot.params.id;
         const ticket$ = this.backend.ticket(id);
-
         const users$ = this.backend.users();
 
         this.data$ = combineLatest([ ticket$, users$ ]).pipe(

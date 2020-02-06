@@ -3,16 +3,16 @@
 <div *ngIf="data$ | async as data; else loading">
     <form [formGroup]="form">
         <mat-form-field>
-            <input matInput readonly formControlName="id" placeholder="Id">
+            <input class="id " matInput readonly formControlName="id" placeholder="Id">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput formControlName="description" placeholder="Description">
+            <input class="description" matInput formControlName="description" placeholder="Description">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Assignee</mat-label>
-            <mat-select formControlName="assigneeId">
+            <mat-select class="assignee-id" formControlName="assigneeId">
                 <mat-option *ngFor="let user of data.users" [value]="user.id">
                     {{user.name}}
                 </mat-option>

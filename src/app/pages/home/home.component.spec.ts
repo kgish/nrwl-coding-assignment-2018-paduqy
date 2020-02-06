@@ -29,4 +29,9 @@ describe('HomeComponent', () => {
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('.page-header').textContent).toContain('Welcome');
     }));
+
+    it('should display tickets button', async(() => {
+        const compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('button.tickets').textContent).toContain('Tickets');
+    }));
 });
