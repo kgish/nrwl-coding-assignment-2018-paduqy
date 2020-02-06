@@ -59,7 +59,8 @@ The backend is a mock server api which uses in memory static data (tickets and u
 
 ## Error handling
 
-When making calls to the 
+When making calls to the server API and an exception occurs, we handle this by returning a default "safe" value and
+displaying the error, for now just logging a message to the console.
 
 ```
 ngOnInit(): void {
@@ -100,7 +101,7 @@ $ ng e2e
 
 ## Time spent
 
-Focussing on the assignment instructions, I spent in total two evenings and part of a day. When nearing completion, I 
+Focusing on the assignment instructions, I spent in total two evenings and part of a day. When nearing completion, I 
 happened to look at the original email again and discovered that there was a time indication of 2.5 hours, oh dear.
 Sorry about that.
 
